@@ -85,6 +85,29 @@ def remove_from_cart(request, pk):
 
     return redirect('cart_detail')
 
+def increase_quantity(request, pk):
+    cart = request.session.get('cart', {})
+    product_id = str(pk)
+
+    if product_id in cart:
+        cart[product_id]['quantity'] += 1
+
+    request.session['cart'] = cart
+    return redirect('cart_detail')
+
+
+def decrease_quantity(request, pk):
+    cart = request.session.get('cart', {})
+    product_id = str(pk)
+
+    if product_id in cart:
+        if cart[product_id]['quantity'] > 1:
+            cart[product_id]['quantity'] -= 1
+        else:
+            del cart[product_id]
+
+    request.session['cart'] = cart
+    return redirect('cart_detail')
 
 def checkout(request):
     cart = request.session.get('cart', {})

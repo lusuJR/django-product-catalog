@@ -16,7 +16,21 @@
 
         <div class="col-md-4">
             <h5>{{ item.name }}</h5>
-            <p class="text-muted">Quantity: {{ item.quantity }}</p>
+            <div class="d-flex align-items-center gap-2">
+    <span class="text-muted">Quantity:</span>
+
+    <a href="{% url 'decrease_quantity' product_id %}" 
+       class="btn btn-outline-dark btn-sm">
+        -
+    </a>
+
+    <strong>{{ item.quantity }}</strong>
+
+    <a href="{% url 'increase_quantity' product_id %}" 
+       class="btn btn-outline-dark btn-sm">
+        +
+    </a>
+</div>
         </div>
 
         <div class="col-md-2">
