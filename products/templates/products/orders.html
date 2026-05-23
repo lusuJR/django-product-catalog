@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="orders-page">
+
+    <div class="page-header">
+        <h1>My Orders</h1>
+
+        <p>
+            View your recent purchases and order status.
+        </p>
+    </div>
+
+    {% for order in orders %}
+
+    <div class="order-card">
+
+        <div class="order-top">
+
+            <div>
+                <h4>Order #{{ order.id }}</h4>
+
+                <p>
+                    {{ order.created_at }}
+                </p>
+            </div>
+
+            <div class="order-status">
+                {{ order.status }}
+            </div>
+
+        </div>
+
+        <div class="order-items">
+
+            {% for item in order.items.all %}
+
+            <div class="order-item">
+
+                <div>
+                    <strong>{{ item.product.name }}</strong>
+                    <p>
+                        Quantity: {{ item.quantity }}
+                    </p>
+                </div>
+
+                <div>
+                    R {{ item.price }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="order-total">
+            Total: R {{ order.total }}
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="empty-orders">
+        <h3>No Orders Yet</h3>
+
+        <p>
+            Start shopping to see your order history.
+        </p>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

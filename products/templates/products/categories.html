@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Shop Categories</h1>
+    <p>
+        Browse products by category.
+    </p>
+</div>
+
+<div class="row g-4">
+
+    {% for category in categories %}
+    <div class="col-lg-4 col-md-6">
+
+        <div class="category-card">
+
+            <div class="category-icon">
+                🛍️
+            </div>
+
+            <h3>{{ category }}</h3>
+
+            <p>
+                Explore quality {{ category|lower }}
+                products available in our store.
+            </p>
+
+            <a href="/?category={{ category }}"
+               class="btn btn-dark">
+                View Products
+            </a>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

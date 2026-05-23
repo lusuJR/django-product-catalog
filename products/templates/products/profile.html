@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <h1 class="profile-title">My Profile</h1>
+    <p class="breadcrumb-text">Home › My Profile</p>
+
+    <div class="profile-layout">
+
+        <aside class="profile-sidebar">
+            <div class="avatar-circle">👤</div>
+
+            <h3>{{ request.user.username }}</h3>
+            <p>Customer</p>
+
+            <a class="sidebar-link active">👤 Profile Overview</a>
+            <a class="sidebar-link" href="{% url 'order_history' %}">🛒 My Orders</a>
+            <a class="sidebar-link">♡ Wishlist</a>
+            <a class="sidebar-link">📍 Addresses</a>
+            <a class="sidebar-link">🔒 Change Password</a>
+            <a class="sidebar-link">⚙ Account Settings</a>
+
+            <a href="{% url 'logout' %}" class="sidebar-logout">
+                Logout
+            </a>
+        </aside>
+
+        <section class="profile-main-card">
+
+            <h2>👤 Profile Overview</h2>
+            <p class="section-subtitle">
+                Manage your account information and preferences.
+            </p>
+
+            <div class="profile-grid">
+
+                <div class="profile-box">
+                    <span>Username</span>
+                    <strong>{{ request.user.username }}</strong>
+                </div>
+
+                <div class="profile-box">
+                    <span>Email Address</span>
+                    <strong>
+                        {% if request.user.email %}
+                            {{ request.user.email }}
+                        {% else %}
+                            No email added
+                        {% endif %}
+                    </strong>
+                </div>
+
+                <div class="profile-box">
+                    <span>Date Joined</span>
+                    <strong>{{ request.user.date_joined|date:"d M Y" }}</strong>
+                </div>
+
+                <div class="profile-box">
+                    <span>Last Login</span>
+                    <strong>{{ request.user.last_login|date:"d M Y, H:i" }}</strong>
+                </div>
+
+            </div>
+
+            <div class="status-box">
+                <span>Account Status</span>
+                <strong class="active-status">● Active</strong>
+            </div>
+
+            <hr>
+
+            <h2>✏ Quick Actions</h2>
+            <p class="section-subtitle">
+                Update your account and security settings.
+            </p>
+
+            <div class="quick-actions">
+                <div class="action-card">🔒 Change Password ›</div>
+                <div class="action-card">✉ Update Email ›</div>
+                <div class="action-card">👤 Personal Info ›</div>
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}

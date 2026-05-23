@@ -15,9 +15,13 @@
 
     <div class="text-end mt-4">
         <h3>Total: R {{ total }}</h3>
-        <button class="btn btn-dark mt-3">
-            Confirm Order
-        </button>
+        <form method="POST">
+    {% csrf_token %}
+
+    <button type="submit" class="auth-btn">
+        Confirm Order
+    </button>
+</form>
     </div>
 </div>
 {% endblock %}

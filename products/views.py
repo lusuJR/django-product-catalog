@@ -1,5 +1,8 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product
+from django.contrib.auth.decorators import login_required
+from .models import Product, Order, OrderItem
 
 def product_list(request):
     products = Product.objects.all()
@@ -109,11 +112,89 @@ def decrease_quantity(request, pk):
     request.session['cart'] = cart
     return redirect('cart_detail')
 
+@login_required
 def checkout(request):
+   
     cart = request.session.get('cart', {})
-    total = sum(item['price'] * item['quantity'] for item in cart.values())
+    if not cart:
+        return redirect('cart_detail')
 
-    return render(request, 'products/checkout.html', {
-        'cart': cart,
-        'total': total
+    total = sum(
+        item['price'] * item['quantity']
+        for item in cart.values()
+    )
+
+    if request.method == 'POST':
+
+        order = Order.objects.create(
+            user=request.user,
+            total=total
+        )
+
+        for product_id, item in cart.items():
+
+            product = Product.objects.get(id=product_id)
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=item['quantity'],
+                price=item['price']
+            )
+
+        request.session['cart'] = {}
+
+        return redirect('order_history')
+
+    return render(request,
+                 'products/checkout.html',
+                 {
+                     'cart': cart,
+                     'total': total
+                 })
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('product_list')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'registration/register.html', {
+        'form': form
     })
+
+@login_required
+def order_history(request):
+
+    orders = Order.objects.filter(
+        user=request.user
+    ).order_by('-created_at')
+
+    return render(request,
+                 'products/orders.html',
+                 {'orders': orders})
+@login_required
+def profile(request):
+    return render(request, 'products/profile.html')
+
+def categories(request):
+    categories = Product.objects.values_list(
+        'category',
+        flat=True
+    ).distinct()
+
+    return render(request,
+                  'products/categories.html',
+                  {'categories': categories})
+
+
+def about(request):
+    return render(request, 'products/about.html')
+
+def contact(request):
+    return render(request, 'products/contact.html')

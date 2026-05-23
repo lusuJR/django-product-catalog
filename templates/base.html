@@ -17,12 +17,51 @@
     <div class="container-fluid navbar-container">
         <a class="navbar-brand" href="/">Amina Store</a>
 
-        <div class="navbar-links">
-            <a href="/">Home</a>
-            <a href="#">Categories</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </div>
+<div class="navbar-links">
+
+    <a href="/">Home</a>
+    <a href="{% url 'categories' %}">Categories</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'contact' %}">Contact</a>
+
+    {% if user.is_authenticated %}
+
+<div class="user-dropdown">
+
+    <button class="user-btn">
+        👤 {{ request.user.username }}
+        <span class="dropdown-arrow">▼</span>
+    </button>
+
+    <div class="dropdown-menu-custom">
+        <a href="{% url 'profile' %}">
+            👤 My Profile
+        </a>
+
+        <a href="#">
+            📦 Orders
+        </a>
+
+        <a href="{% url 'logout' %}">
+            🚪 Logout
+        </a>
+    </div>
+
+</div>
+
+    {% else %}
+
+    <a href="{% url 'login' %}">
+        Login
+    </a>
+
+    <a href="{% url 'register' %}" class="register-btn">
+        Register
+    </a>
+
+    {% endif %}
+
+</div>
 
         <form class="search-form">
             <input class="form-control" type="search" placeholder="Search products">
@@ -35,12 +74,72 @@
     {% block content %}
     {% endblock %}
 </div>
-<footer class="footer">
-    <div class="container">
-        <p>
-            © 2026 Amina Store | Powered by Django & Python
-        </p>
+<footer class="footer-main">
+
+    <div class="footer-grid">
+
+        <div>
+            <h3>Amina Store</h3>
+            <p>
+                Modern Django Ecommerce powered by Python.
+            </p>
+
+            <div class="social-icons">
+                <span>📘</span>
+                <span>🐦</span>
+                <span>📸</span>
+                <span>💻</span>
+            </div>
+        </div>
+
+        <div>
+            <h4>Shop</h4>
+            <a href="#">All Products</a>
+            <a href="#">Categories</a>
+            <a href="#">Special Offers</a>
+            <a href="#">New Arrivals</a>
+        </div>
+
+        <div>
+            <h4>Customer Service</h4>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Shipping Policy</a>
+            <a href="#">Returns & Refunds</a>
+        </div>
+
+        <div>
+            <h4>My Account</h4>
+            <a href="{% url 'profile' %}">My Profile</a>
+            <a href="#">My Orders</a>
+            <a href="#">Wishlist</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+
+        <div>
+            <h4>Newsletter</h4>
+
+            <p>
+                Subscribe to get updates and special offers.
+            </p>
+
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
     </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Amina Store. All rights reserved.</p>
+
+        <div>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </div>
+
 </footer>
 </body>
 </html>

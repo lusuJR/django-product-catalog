@@ -1,17 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="mb-4">Product Catalogue</h1>
 
-<div class="p-5 mb-5 bg-white rounded-4 shadow-sm">
-    <h1 class="display-4 fw-bold">
-        Discover Amazing Products
-    </h1>
 
-    <p class="lead text-muted">
-        Modern Django Ecommerce Catalogue powered by Python.
-    </p>
-</div>
+<section class="home-hero">
+
+    <div class="hero-content">
+        <span class="hero-badge">New Arrivals Available</span>
+
+        <h1>
+            Shop Smart with Amina Store
+        </h1>
+
+        <p>
+            Discover quality products, great prices, and a modern shopping experience powered by Django and Python.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#products" class="btn btn-dark">
+                Shop Now
+            </a>
+
+            <a href="{% url 'cart_detail' %}" class="btn btn-outline-dark">
+                View Cart
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <h3>Why Shop With Us?</h3>
+
+        <div class="hero-feature">Fast product browsing</div>
+        <div class="hero-feature">Secure customer accounts</div>
+        <div class="hero-feature">Simple cart and checkout</div>
+    </div>
+
+</section>
+
+<section class="home-stats">
+
+    <div>
+        <h3>{{ products|length }}+</h3>
+        <p>Products</p>
+    </div>
+
+    <div>
+        <h3>24/7</h3>
+        <p>Online Access</p>
+    </div>
+
+    <div>
+        <h3>100%</h3>
+        <p>Django Powered</p>
+    </div>
+
+</section>
+
+<h1 id="products" class="mb-4 section-title">Featured Products</h1>
 <form method="GET" class="row g-3 mb-5 filter-form">
 
     <div class="col-md-4">
