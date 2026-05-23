@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -48,7 +49,7 @@
                 <div>
                     R {{ item.price }}
                 </div>
-
+                <img src="{{ item.product.image.url }}" class="order-product-image">
             </div>
 
             {% endfor %}
@@ -56,7 +57,7 @@
         </div>
 
         <div class="order-total">
-            Total: R {{ order.total }}
+           Total: <strong>R {{ order.total }}</strong>
         </div>
 
     </div>
@@ -64,11 +65,9 @@
     {% empty %}
 
     <div class="empty-orders">
+        <img src="{% static 'images/empty-cart.png' %}">
         <h3>No Orders Yet</h3>
-
-        <p>
-            Start shopping to see your order history.
-        </p>
+        <p>Start shopping to see your purchases.</p>
     </div>
 
     {% endfor %}

@@ -38,13 +38,16 @@
             👤 My Profile
         </a>
 
-        <a href="#">
+        <a href="{% url 'order_history' %}">
             📦 Orders
         </a>
 
-        <a href="{% url 'logout' %}">
-            🚪 Logout
-        </a>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="dropdown-logout-btn">
+                🚪 Logout
+            </button>
+        </form>
     </div>
 
 </div>
@@ -63,10 +66,17 @@
 
 </div>
 
-        <form class="search-form">
-            <input class="form-control" type="search" placeholder="Search products">
-            <button class="btn btn-light" type="submit">Search</button>
-        </form>
+    <form method="GET" action="{% url 'product_list' %}" class="search-form">
+        <input class="form-control"
+            type="search"
+            name="search"
+            placeholder="Search products"
+            value="{{ search_query|default:'' }}">
+
+        <button class="btn btn-light" type="submit">
+            Search
+        </button>
+    </form>
     </div>
 </nav>
 
@@ -94,16 +104,16 @@
 
         <div>
             <h4>Shop</h4>
-            <a href="#">All Products</a>
-            <a href="#">Categories</a>
+            <a href="{% url 'product_list' %}">All Products</a>
+            <a href="{% url 'categories' %}">Categories</a>
             <a href="#">Special Offers</a>
             <a href="#">New Arrivals</a>
         </div>
 
         <div>
             <h4>Customer Service</h4>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'contact' %}">Contact Us</a>
             <a href="#">Shipping Policy</a>
             <a href="#">Returns & Refunds</a>
         </div>
@@ -111,9 +121,14 @@
         <div>
             <h4>My Account</h4>
             <a href="{% url 'profile' %}">My Profile</a>
-            <a href="#">My Orders</a>
+            <a href="{% url 'order_history' %}">My Orders</a>
             <a href="#">Wishlist</a>
-            <a href="{% url 'logout' %}">Logout</a>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-logout-btn">
+                    🚪 Logout
+                </button>
+            </form>
         </div>
 
         <div>
