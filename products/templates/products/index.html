@@ -12,7 +12,48 @@
         Modern Django Ecommerce Catalogue powered by Python.
     </p>
 </div>
+<form method="GET" class="row g-3 mb-5 filter-form">
 
+    <div class="col-md-4">
+        <input type="text"
+               name="search"
+               class="form-control"
+               placeholder="Search products..."
+               value="{{ search_query|default:'' }}">
+    </div>
+
+    <div class="col-md-3">
+        <select name="category" class="form-select">
+            <option value="">All Categories</option>
+
+            {% for category in categories %}
+                <option value="{{ category }}"
+                    {% if category_filter == category %}selected{% endif %}>
+                    {{ category }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select name="sort" class="form-select">
+            <option value="">Sort by Price</option>
+            <option value="low" {% if sort_price == 'low' %}selected{% endif %}>
+                Price: Low to High
+            </option>
+            <option value="high" {% if sort_price == 'high' %}selected{% endif %}>
+                Price: High to Low
+            </option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100">
+            Apply
+        </button>
+    </div>
+
+</form>
 <div class="row">
     {% for product in products %}
     <div class="col-lg-3 col-md-6 mb-4">
