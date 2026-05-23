@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Shopping Cart</h1>
+
+{% if cart %}
+<div class="card shadow-sm p-4">
+    {% for product_id, item in cart.items %}
+    <div class="row align-items-center mb-4 border-bottom pb-3">
+
+        <div class="col-md-2">
+            {% if item.image %}
+                <img src="{{ item.image }}" class="img-fluid rounded" alt="{{ item.name }}">
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <h5>{{ item.name }}</h5>
+            <p class="text-muted">Quantity: {{ item.quantity }}</p>
+        </div>
+
+        <div class="col-md-2">
+            <strong>R {{ item.price }}</strong>
+        </div>
+
+        <div class="col-md-2">
+            <strong>R {{ item.subtotal }}</strong>
+        </div>
+
+        <div class="col-md-2">
+            <a href="{% url 'remove_from_cart' product_id %}" class="btn btn-outline-danger">
+                Remove
+            </a>
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <div class="text-end">
+        <h3>Total: R {{ total }}</h3>
+
+        <a href="{% url 'checkout' %}" class="btn btn-dark mt-3">
+            Proceed to Checkout
+        </a>
+    </div>
+</div>
+{% else %}
+<p>Your cart is empty.</p>
+<a href="/" class="btn btn-dark">Continue Shopping</a>
+{% endif %}
+{% endblock %}

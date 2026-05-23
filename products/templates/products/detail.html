@@ -16,7 +16,18 @@
             <p>{{ product.description }}</p>
             <p><strong>Stock:</strong> {{ product.stock }}</p>
 
-            <a href="/" class="btn btn-secondary">Back to Products</a>
+           <div class="d-flex gap-3 mt-4">
+
+    <a href="{% url 'add_to_cart' product.id %}" 
+       class="btn btn-dark">
+        Add to Cart
+    </a>
+
+    <a href="/" class="btn btn-outline-dark">
+        Back to Products
+    </a>
+
+</div>
         </div>
     </div>
 </div>

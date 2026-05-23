@@ -84,10 +84,19 @@
                     Stock Available: {{ product.stock }}
                 </p>
 
-                <a href="{% url 'product_detail' product.id %}" 
-                   class="btn btn-dark w-100">
-                    View Product
-                </a>
+                <div class="d-flex gap-2">
+
+    <a href="{% url 'product_detail' product.id %}" 
+       class="btn btn-outline-dark w-50">
+        Details
+    </a>
+
+    <a href="{% url 'add_to_cart' product.id %}" 
+       class="btn btn-dark w-50">
+        Add to Cart
+    </a>
+
+</div>
             </div>
 
         </div>

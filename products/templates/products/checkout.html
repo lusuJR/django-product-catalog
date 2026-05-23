@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Checkout</h1>
+
+<div class="card shadow-sm p-4">
+    <h3>Order Summary</h3>
+
+    {% for product_id, item in cart.items %}
+    <div class="d-flex justify-content-between border-bottom py-3">
+        <span>{{ item.name }} x {{ item.quantity }}</span>
+        <strong>R {{ item.price }}</strong>
+    </div>
+    {% endfor %}
+
+    <div class="text-end mt-4">
+        <h3>Total: R {{ total }}</h3>
+        <button class="btn btn-dark mt-3">
+            Confirm Order
+        </button>
+    </div>
+</div>
+{% endblock %}
