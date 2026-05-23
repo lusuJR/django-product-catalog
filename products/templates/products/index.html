@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Product Catalogue</h1>
+
+<div class="p-5 mb-5 bg-white rounded-4 shadow-sm">
+    <h1 class="display-4 fw-bold">
+        Discover Amazing Products
+    </h1>
+
+    <p class="lead text-muted">
+        Modern Django Ecommerce Catalogue powered by Python.
+    </p>
+</div>
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card product-card h-100 shadow-sm">
+
+            <div class="text-center">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" 
+                         class="card-img-top product-image" 
+                         alt="{{ product.name }}">
+                {% else %}
+                    <div class="product-image d-flex align-items-center justify-content-center">
+                        No Image
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+                <span class="category-badge">
+                    {{ product.category }}
+                </span>
+
+                <h5 class="card-title">{{ product.name }}</h5>
+
+                <p class="price">R {{ product.price }}</p>
+
+                <p class="text-muted">
+                    Stock Available: {{ product.stock }}
+                </p>
+
+                <a href="{% url 'product_detail' product.id %}" 
+                   class="btn btn-dark w-100">
+                    View Product
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+    <p>No products available.</p>
+    {% endfor %}
+</div>
+{% endblock %}
