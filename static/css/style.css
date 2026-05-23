@@ -1,0 +1,148 @@
+body {
+    background: #f5f7fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(90deg, #0f172a, #1e293b);
+    padding: 18px 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 2rem;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    transition: 0.3s;
+}
+
+.navbar-links a:hover {
+    color: #60a5fa;
+}
+
+.navbar-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    left: 0;
+    bottom: -6px;
+    background: #60a5fa;
+    transition: 0.3s;
+}
+
+.navbar-links a:hover::after {
+    width: 100%;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+/* General */
+h1 {
+    font-weight: 700;
+    color: #111827;
+}
+
+/* Product Cards */
+.product-card {
+    height: 100%;
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+.product-image {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    background: white;
+    padding: 15px;
+    border-radius: 20px 20px 0 0;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.category-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.btn-dark {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-dark:hover {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #1f2937, #111827);
+}
+
+/* Footer */
+.footer {
+    margin-top: 80px;
+    padding: 30px 0;
+    text-align: center;
+    color: #6b7280;
+}
