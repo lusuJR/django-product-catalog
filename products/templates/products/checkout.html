@@ -15,13 +15,7 @@
 
     <div class="text-end mt-4">
         <h3>Total: R {{ total }}</h3>
-        <form method="POST">
-    {% csrf_token %}
-
-    <button type="submit" class="auth-btn">
-        Confirm Order
-    </button>
-</form>
+        <a href="{% url 'payment_page' %}" class="auth-btn">Proceed to Payment </a>
     </div>
 </div>
 {% endblock %}

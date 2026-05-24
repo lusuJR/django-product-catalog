@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="payment-page">
+
+    <div class="payment-container">
+
+        <div class="payment-header">
+            <h1>Payment</h1>
+            <p>Complete your order securely.</p>
+        </div>
+
+        <div class="payment-grid">
+
+            <!-- PAYMENT FORM -->
+
+            <div class="payment-card">
+
+                <h3>Select Payment Method</h3>
+
+                <div class="payment-methods">
+
+                    <label class="payment-option active-payment">
+                        <input type="radio" checked>
+                        <i class="fa-solid fa-credit-card"></i>
+                        Card Payment
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio">
+                        <i class="fa-solid fa-building-columns"></i>
+                        Bank Transfer
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio">
+                        <i class="fa-solid fa-wallet"></i>
+                        PayPal
+                    </label>
+
+                </div>
+
+                <form method="POST" action="{% url 'place_order' %}">
+
+                    {% csrf_token %}
+
+                    <div class="payment-form-group">
+                        <label>Card Holder Name</label>
+                        <input type="text" placeholder="John Doe">
+                    </div>
+
+                    <div class="payment-form-group">
+                        <label>Card Number</label>
+                        <input type="text" placeholder="1234 5678 9012 3456">
+                    </div>
+
+                    <div class="payment-row">
+
+                        <div class="payment-form-group">
+                            <label>Expiry Date</label>
+                            <input type="text" placeholder="MM/YY">
+                        </div>
+
+                        <div class="payment-form-group">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123">
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="pay-btn">
+                        <i class="fa-solid fa-lock"></i>
+                        Confirm Payment
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- ORDER SUMMARY -->
+
+            <div class="payment-summary">
+
+                <h3>Order Summary</h3>
+
+                {% for product_id, item in cart.items %}
+
+                <div class="summary-item">
+
+                    <div class="summary-product">
+
+                        <img src="{{ item.image }}">
+
+                        <div>
+                            <strong>{{ item.name }}</strong>
+                            <p>Qty: {{ item.quantity }}</p>
+                        </div>
+
+                    </div>
+
+                    <strong>
+                        R {{ item.subtotal }}
+                    </strong>
+
+                </div>
+
+                {% endfor %}
+
+                <div class="payment-total">
+                    <span>Total</span>
+                    <strong>R {{ total }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

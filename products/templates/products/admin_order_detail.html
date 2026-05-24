@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'products/admin_sidebar.html' %}
+
+    <div class="admin-content">
+
+        <div class="dashboard-header">
+            <h1>Order #{{ order.id }}</h1>
+            <p>Customer order details and purchased items.</p>
+        </div>
+
+        <!-- ORDER INFO -->
+
+        <div class="order-detail-grid">
+
+            <div class="dashboard-panel">
+
+                <h3>Customer Information</h3>
+
+                <div class="detail-row">
+                    <span>Username</span>
+                    <strong>{{ order.user.username }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Email</span>
+                    <strong>{{ order.user.email }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Order Date</span>
+                    <strong>{{ order.created_at|date:"d M Y" }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Status</span>
+
+                    <span class="status-badge status-{{ order.status|lower }}">
+                        {{ order.status }}
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="dashboard-panel">
+
+                <h3>Order Summary</h3>
+
+                <div class="detail-row">
+                    <span>Total Items</span>
+                    <strong>{{ order.items.count }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Total Amount</span>
+                    <strong>R {{ order.total }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ORDER ITEMS -->
+
+        <div class="dashboard-panel mt-4">
+
+            <h3>Purchased Products</h3>
+
+            <table class="admin-table">
+
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in order.items.all %}
+
+                    <tr>
+
+                        <td>
+                            <img src="{{ item.product.image.url }}"
+                                 class="admin-product-img">
+                        </td>
+
+                        <td>
+                            {{ item.product.name }}
+                        </td>
+
+                        <td>
+                            R {{ item.price }}
+                        </td>
+
+                        <td>
+                            {{ item.quantity }}
+                        </td>
+
+                        <td>
+                            R {{ item.price|floatformat:2 }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

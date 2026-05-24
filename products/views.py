@@ -347,3 +347,67 @@ def update_order_status(request, order_id, status):
     order.save()
 
     return redirect('admin_orders')
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    return render(request, 'products/admin_order_detail.html', {
+        'order': order
+    })
+
+@login_required(login_url='login')
+def payment_page(request):
+
+    cart = request.session.get('cart', {})
+
+    if not cart:
+        return redirect('cart_detail')
+
+    total = 0
+
+    for item in cart.values():
+        item['subtotal'] = item['price'] * item['quantity']
+        total += item['subtotal']
+
+    return render(request, 'products/payment.html', {
+        'cart': cart,
+        'total': total
+    })
+
+@login_required(login_url='login')
+def place_order(request):
+
+    cart = request.session.get('cart', {})
+
+    if not cart:
+        return redirect('cart_detail')
+
+    total = sum(
+        item['price'] * item['quantity']
+        for item in cart.values()
+    )
+
+    if request.method == 'POST':
+
+        order = Order.objects.create(
+            user=request.user,
+            total=total
+        )
+
+        for product_id, item in cart.items():
+
+            product = Product.objects.get(id=product_id)
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                quantity=item['quantity'],
+                price=item['price']
+            )
+
+        request.session['cart'] = {}
+
+        return redirect('order_history')
+
+    return redirect('payment_page')

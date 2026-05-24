@@ -41,4 +41,15 @@ urlpatterns = [
     views.update_order_status,
     name='update_order_status'
 ),
+path(
+    'dashboard/orders/<int:order_id>/',
+    views.admin_order_detail,
+    name='admin_order_detail'
+),
+path(
+    'payment/',
+    views.payment_page,
+    name='payment_page'
+),
+path('place-order/', views.place_order, name='place_order'),
 ]

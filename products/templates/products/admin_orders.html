@@ -57,6 +57,11 @@
                         </td>
 
                 <td class="order-actions">
+                    <a href="{% url 'admin_order_detail' order.id %}"
+                    class="btn-action view-btn">
+                        <i class="fa-solid fa-eye"></i>
+                        View
+                    </a>
 
                     <a href="{% url 'update_order_status' order.id 'Processing' %}"
                     class="btn-action blue-btn">
