@@ -27,4 +27,13 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('orders/', views.order_history, name='order_history'),
+    path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('dashboard/products/', views.admin_products, name='admin_products'),
+    path('dashboard/orders/', views.admin_orders, name='admin_orders'),
+    path('dashboard/customers/', views.admin_customers, name='admin_customers'),
+    path('dashboard/analytics/', views.admin_analytics, name='admin_analytics'),
+    path('dashboard/settings/', views.admin_settings, name='admin_settings'),
+    path('dashboard/products/add/', views.admin_add_product, name='admin_add_product'),
+    path('dashboard/products/edit/<int:pk>/', views.admin_edit_product, name='admin_edit_product'),
+    path('dashboard/products/delete/<int:pk>/', views.admin_delete_product, name='admin_delete_product'),
 ]

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'products/admin_sidebar.html' %}
+
+    <div class="admin-content">
+
+        <div class="dashboard-header">
+            <h1>Customers</h1>
+            <p>Manage registered store customers.</p>
+        </div>
+
+        <div class="dashboard-panel">
+
+            <table class="admin-table">
+
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date Joined</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for customer in customers %}
+
+                    <tr>
+
+                        <td>
+                            {{ customer.username }}
+                        </td>
+
+                        <td>
+                            {{ customer.email }}
+                        </td>
+
+                        <td>
+                            {{ customer.date_joined|date:"d M Y" }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

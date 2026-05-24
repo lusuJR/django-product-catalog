@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'products/admin_sidebar.html' %}
+
+    <main class="admin-content">
+
+        <div class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <p>Manage store performance, products, orders, and stock levels.</p>
+        </div>
+
+        <div class="dashboard-stats">
+
+            <div class="dashboard-card">
+                <span>Products</span>
+                <h2>{{ total_products }}</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <span>Total Orders</span>
+                <h2>{{ total_orders }}</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <span>Pending Orders</span>
+                <h2>{{ pending_orders }}</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <span>Total Revenue</span>
+                <h2>R {{ total_revenue }}</h2>
+            </div>
+
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-panel">
+                <h3>Recent Orders</h3>
+
+                {% for order in recent_orders %}
+                <div class="dashboard-row">
+                    <span>Order #{{ order.id }}</span>
+                    <strong>R {{ order.total }}</strong>
+                </div>
+                {% empty %}
+                <p>No recent orders.</p>
+                {% endfor %}
+            </div>
+
+            <div class="dashboard-panel">
+                <h3>Low Stock Products</h3>
+
+                {% for product in low_stock_products %}
+                <div class="dashboard-row">
+                    <span>{{ product.name }}</span>
+                    <strong>{{ product.stock }} left</strong>
+                </div>
+                {% empty %}
+                <p>No low stock products.</p>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}

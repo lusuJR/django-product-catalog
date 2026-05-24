@@ -2,7 +2,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from .models import Product, Order, OrderItem
+from .forms import ProductForm
 
 def product_list(request):
     products = Product.objects.all()
@@ -198,3 +200,108 @@ def about(request):
 
 def contact(request):
     return render(request, 'products/contact.html')
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_dashboard(request):
+    total_products = Product.objects.count()
+    total_orders = Order.objects.count()
+    pending_orders = Order.objects.filter(status='Pending').count()
+    total_revenue = sum(order.total for order in Order.objects.all())
+
+    recent_orders = Order.objects.all().order_by('-created_at')[:5]
+    low_stock_products = Product.objects.filter(stock__lte=10)
+
+    context = {
+        'total_products': total_products,
+        'total_orders': total_orders,
+        'pending_orders': pending_orders,
+        'total_revenue': total_revenue,
+        'recent_orders': recent_orders,
+        'low_stock_products': low_stock_products,
+    }
+
+    return render(request, 'products/admin_dashboard.html', context)
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_products(request):
+    products = Product.objects.all().order_by('-created_at')
+    return render(request, 'products/admin_products.html', {'products': products})
+
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_orders(request):
+    orders = Order.objects.all().order_by('-created_at')
+    return render(request, 'products/admin_orders.html', {'orders': orders})
+
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_customers(request):
+    from django.contrib.auth.models import User
+    customers = User.objects.filter(is_staff=False)
+    return render(request, 'products/admin_customers.html', {'customers': customers})
+
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_analytics(request):
+    total_products = Product.objects.count()
+    total_orders = Order.objects.count()
+    total_revenue = sum(order.total for order in Order.objects.all())
+
+    return render(request, 'products/admin_analytics.html', {
+        'total_products': total_products,
+        'total_orders': total_orders,
+        'total_revenue': total_revenue,
+    })
+
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_settings(request):
+    return render(request, 'products/admin_settings.html')
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('admin_products')
+    else:
+        form = ProductForm()
+
+    return render(request, 'products/admin_product_form.html', {
+        'form': form,
+        'title': 'Add Product'
+    })
+
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_edit_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+
+        if form.is_valid():
+            form.save()
+            return redirect('admin_products')
+    else:
+        form = ProductForm(instance=product)
+
+    return render(request, 'products/admin_product_form.html', {
+        'form': form,
+        'title': 'Edit Product'
+    })
+
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def admin_delete_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('admin_products')
+
+    return render(request, 'products/admin_delete_product.html', {
+        'product': product
+    })

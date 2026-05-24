@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'products/admin_sidebar.html' %}
+
+    <div class="admin-content">
+
+        <div class="dashboard-header admin-products-header">
+
+            <div>
+                <h1>Products</h1>
+                <p>Manage all products in your store.</p>
+            </div>
+
+            <div>
+                <a href="{% url 'admin_add_product' %}" class="add-product-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Product
+                </a>
+            </div>
+
+        </div>
+
+        <div class="dashboard-panel">
+
+            <table class="admin-table">
+
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for product in products %}
+
+                    <tr>
+                        <td>
+                            <img src="{{ product.image.url }}" class="admin-product-img">
+                        </td>
+
+                        <td>{{ product.name }}</td>
+
+                        <td>{{ product.category }}</td>
+
+                        <td>R {{ product.price }}</td>
+
+                        <td>{{ product.stock }}</td>
+                        <td>
+
+                            <div class="admin-actions">
+
+                                <a href="{% url 'admin_edit_product' product.id %}" class="edit-btn">
+                                    <i class="fa-solid fa-pen"></i>
+                                    Edit
+                                </a>
+
+                                <a href="{% url 'admin_delete_product' product.id %}" class="delete-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

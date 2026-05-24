@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-layout">
+
+    {% include 'products/admin_sidebar.html' %}
+
+    <div class="admin-content">
+
+        <div class="dashboard-header">
+            <h1>Delete Product</h1>
+            <p>Confirm product removal from the catalogue.</p>
+        </div>
+
+        <div class="dashboard-panel">
+
+            <h3>Are you sure you want to delete this product?</h3>
+
+            <p>
+                <strong>{{ product.name }}</strong>
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Delete Product
+                </button>
+
+                <a href="{% url 'admin_products' %}" class="btn btn-outline-dark">
+                    Cancel
+                </a>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
