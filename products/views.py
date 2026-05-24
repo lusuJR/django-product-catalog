@@ -225,7 +225,32 @@ def admin_dashboard(request):
 @user_passes_test(lambda user: user.is_staff, login_url='login')
 def admin_products(request):
     products = Product.objects.all().order_by('-created_at')
-    return render(request, 'products/admin_products.html', {'products': products})
+
+    search_query = request.GET.get('search')
+    category_filter = request.GET.get('category')
+    stock_filter = request.GET.get('stock')
+
+    if search_query:
+        products = products.filter(name__icontains=search_query)
+
+    if category_filter:
+        products = products.filter(category__iexact=category_filter)
+
+    if stock_filter == 'low':
+        products = products.filter(stock__lte=10)
+
+    categories = Product.objects.values_list(
+        'category',
+        flat=True
+    ).distinct()
+
+    return render(request, 'products/admin_products.html', {
+        'products': products,
+        'categories': categories,
+        'search_query': search_query,
+        'category_filter': category_filter,
+        'stock_filter': stock_filter,
+    })
 
 
 @user_passes_test(lambda user: user.is_staff, login_url='login')

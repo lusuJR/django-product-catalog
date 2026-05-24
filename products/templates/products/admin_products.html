@@ -23,7 +23,40 @@
             </div>
 
         </div>
+        <form method="GET" class="admin-filter-form">
 
+            <input type="text"
+                name="search"
+                placeholder="Search products..."
+                value="{{ search_query|default:'' }}">
+
+            <select name="category">
+                <option value="">All Categories</option>
+
+                {% for category in categories %}
+                    <option value="{{ category }}"
+                        {% if category_filter == category %}selected{% endif %}>
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="stock">
+                <option value="">All Stock</option>
+                <option value="low" {% if stock_filter == 'low' %}selected{% endif %}>
+                    Low Stock
+                </option>
+            </select>
+
+            <button type="submit">
+                Filter
+            </button>
+
+            <a href="{% url 'admin_products' %}" class="clear-filter-btn">
+                Clear
+            </a>
+
+        </form>
         <div class="dashboard-panel">
 
             <table class="admin-table">
