@@ -30,6 +30,7 @@ class Order(models.Model):
         ('Pending', 'Pending'),
         ('Processing', 'Processing'),
         ('Delivered', 'Delivered'),
+         ('Cancelled', 'Cancelled'),
     )
 
     status = models.CharField(

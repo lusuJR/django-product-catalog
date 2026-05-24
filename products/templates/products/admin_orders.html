@@ -24,6 +24,7 @@
                         <th>Status</th>
                         <th>Total</th>
                         <th>Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
 
@@ -42,7 +43,7 @@
                         </td>
 
                         <td>
-                            <span class="status-badge">
+                            <span class="status-badge status-{{ order.status|lower }}">
                                 {{ order.status }}
                             </span>
                         </td>
@@ -55,6 +56,36 @@
                             {{ order.created_at|date:"d M Y" }}
                         </td>
 
+                <td class="order-actions">
+
+                    <a href="{% url 'update_order_status' order.id 'Processing' %}"
+                    class="btn-action blue-btn">
+                        <i class="fa-solid fa-gear"></i>
+                        Processing
+                    </a>
+
+                    <a href="{% url 'update_order_status' order.id 'Delivered' %}"
+                    class="btn-action green-btn">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Delivered
+                    </a>
+
+                    <a href="{% url 'update_order_status' order.id 'Cancelled' %}"
+                    class="btn-action red-btn">
+                        <i class="fa-solid fa-ban"></i>
+                        Cancel
+                    </a>
+
+                </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="empty-table">
+                            No orders available.
+                        </td>
                     </tr>
 
                     {% endfor %}

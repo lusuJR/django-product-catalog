@@ -36,4 +36,9 @@ urlpatterns = [
     path('dashboard/products/add/', views.admin_add_product, name='admin_add_product'),
     path('dashboard/products/edit/<int:pk>/', views.admin_edit_product, name='admin_edit_product'),
     path('dashboard/products/delete/<int:pk>/', views.admin_delete_product, name='admin_delete_product'),
+    path(
+    'dashboard/orders/update/<int:order_id>/<str:status>/',
+    views.update_order_status,
+    name='update_order_status'
+),
 ]

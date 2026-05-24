@@ -337,3 +337,13 @@ def admin_delete_product(request, pk):
     return render(request, 'products/admin_delete_product.html', {
         'product': product
     })
+
+@user_passes_test(lambda user: user.is_staff, login_url='login')
+def update_order_status(request, order_id, status):
+
+    order = get_object_or_404(Order, id=order_id)
+
+    order.status = status
+    order.save()
+
+    return redirect('admin_orders')
