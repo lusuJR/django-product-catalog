@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <h1 class="profile-title">Addresses</h1>
+
+    <p class="breadcrumb-text">
+        Home › My Profile › Addresses
+    </p>
+
+    <div class="profile-layout">
+
+        {% include 'products/profile_sidebar.html' %}
+
+        <section class="profile-main-card">
+
+            <div class="reviews-header">
+
+                <div>
+
+                    <h2>
+                        <i class="fa-solid fa-location-dot"></i>
+                        Saved Addresses
+                    </h2>
+
+                    <p class="section-subtitle">
+                        Manage your shipping and delivery addresses.
+                    </p>
+
+                </div>
+
+                <button class="review-btn">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Address
+
+                </button>
+
+            </div>
+
+            <!-- ADDRESS CARD -->
+
+            <div class="review-card">
+
+                <div class="review-top">
+
+                    <strong>Home Address</strong>
+
+                    <span class="status-badge status-processing">
+                        Default
+                    </span>
+
+                </div>
+
+                <p class="review-comment">
+                    245 Market Street<br>
+                    Pretoria Central<br>
+                    Gauteng<br>
+                    South Africa<br>
+                    0001
+                </p>
+
+                <div class="d-flex gap-3 mt-3">
+
+                    <button class="btn btn-outline-primary">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
+                    </button>
+
+                    <button class="btn btn-outline-danger">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- SECOND ADDRESS -->
+
+            <div class="review-card">
+
+                <div class="review-top">
+
+                    <strong>Office Address</strong>
+
+                </div>
+
+                <p class="review-comment">
+                    120 Business Avenue<br>
+                    Johannesburg<br>
+                    Gauteng<br>
+                    South Africa<br>
+                    2000
+                </p>
+
+                <div class="d-flex gap-3 mt-3">
+
+                    <button class="btn btn-outline-primary">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
+                    </button>
+
+                    <button class="btn btn-outline-danger">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}

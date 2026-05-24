@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="success-page">
+
+    <div class="success-container">
+
+        <!-- SUCCESS ICON -->
+
+        <div class="success-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <!-- HEADER -->
+
+        <div class="success-header">
+
+            <h1>Payment Successful</h1>
+
+            <p>
+                Your order has been placed successfully.
+            </p>
+
+        </div>
+
+        <!-- ORDER INFO -->
+
+        <div class="success-order-card">
+
+            <div class="success-row">
+                <span>Order Number</span>
+                <strong>#{{ order.id }}</strong>
+            </div>
+
+            <div class="success-row">
+                <span>Order Date</span>
+                <strong>{{ order.created_at|date:"d M Y" }}</strong>
+            </div>
+
+            <div class="success-row">
+                <span>Payment Status</span>
+
+                <span class="status-badge status-processing">
+                    Paid
+                </span>
+            </div>
+
+            <div class="success-row">
+                <span>Total Amount</span>
+                <strong>R {{ order.total }}</strong>
+            </div>
+
+        </div>
+
+        <!-- PURCHASED ITEMS -->
+
+        <div class="success-products">
+
+            <h3>Purchased Items</h3>
+
+            {% for item in order_items %}
+
+            <div class="success-product-item">
+
+                <div class="success-product-info">
+
+                    <img src="{{ item.product.image.url }}">
+
+                    <div>
+                        <strong>{{ item.product.name }}</strong>
+                        <p>Qty: {{ item.quantity }}</p>
+                    </div>
+
+                </div>
+
+                <strong>
+                    R {{ item.price }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- ACTIONS -->
+
+        <div class="success-actions">
+
+            <a href="{% url 'product_list' %}" class="success-btn">
+                <i class="fa-solid fa-house"></i>
+                Continue Shopping
+            </a>
+
+            <a href="{% url 'order_history' %}" class="success-btn-outline">
+                <i class="fa-solid fa-bag-shopping"></i>
+                View Orders
+            </a>
+            <a href="{% url 'download_invoice' order.id %}" class="success-btn-outline">
+                <i class="fa-solid fa-file-pdf"></i>
+                Download Invoice
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -13,74 +13,130 @@
      <link rel="stylesheet"
       href="{% static 'css/style.css' %}?v=2">
 </head>
-<body>
+<body id="appBody">
 
-<nav class="navbar">
-    <div class="container-fluid navbar-container">
-        <a class="navbar-brand" href="/">Amina Store</a>
+    <nav class="navbar">
 
-<div class="navbar-links">
+        <div class="navbar-container">
 
-    <a href="/">Home</a>
-    <a href="{% url 'categories' %}">Categories</a>
-    <a href="{% url 'about' %}">About</a>
-    <a href="{% url 'contact' %}">Contact</a>
+            <a class="navbar-brand" href="{% url 'product_list' %}">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span>Amina</span> Store
+            </a>
 
-    {% if user.is_authenticated %}
+            <div class="navbar-links">
 
-<div class="user-dropdown">
+                <a href="{% url 'product_list' %}">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
 
-    <button class="user-btn">
-        👤 {{ request.user.username }}
-        <span class="dropdown-arrow">▼</span>
-    </button>
+                <a href="{% url 'categories' %}">
+                    <i class="fa-solid fa-layer-group"></i>
+                    Categories
+                </a>
 
-    <div class="dropdown-menu-custom">
-        <a href="{% url 'profile' %}">
-            👤 My Profile
-        </a>
+                <a href="{% url 'about' %}">
+                    <i class="fa-solid fa-circle-info"></i>
+                    About
+                </a>
 
-        <a href="{% url 'order_history' %}">
-            📦 Orders
-        </a>
+                <a href="{% url 'contact' %}">
+                    <i class="fa-solid fa-envelope"></i>
+                    Contact
+                </a>
 
-        <form method="POST" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="dropdown-logout-btn">
-                🚪 Logout
-            </button>
-        </form>
-    </div>
+            </div>
 
-</div>
+            <div class="navbar-actions">
 
-    {% else %}
+                {% if user.is_authenticated %}
 
-    <a href="{% url 'login' %}">
-        Login
-    </a>
+                <div class="user-dropdown">
 
-    <a href="{% url 'register' %}" class="register-btn">
-        Register
-    </a>
+                    <button class="user-btn">
 
-    {% endif %}
+                        <i class="fa-solid fa-user"></i>
 
-</div>
+                        {{ request.user.username }}
 
-    <form method="GET" action="{% url 'product_list' %}" class="search-form">
-        <input class="form-control"
-            type="search"
-            name="search"
-            placeholder="Search products"
-            value="{{ search_query|default:'' }}">
+                        <span class="dropdown-arrow">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
 
-        <button class="btn btn-light" type="submit">
-            Search
-        </button>
-    </form>
-    </div>
-</nav>
+                    </button>
+
+                    <div class="dropdown-menu-custom">
+
+                        <a href="{% url 'profile' %}">
+                            <i class="fa-solid fa-user"></i>
+                            My Profile
+                        </a>
+
+                        <a href="{% url 'order_history' %}">
+                            <i class="fa-solid fa-box"></i>
+                            Orders
+                        </a>
+
+                        <form method="POST" action="{% url 'logout' %}">
+                            {% csrf_token %}
+
+                            <button type="submit" class="dropdown-logout-btn">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Logout
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+                {% else %}
+
+                <a href="{% url 'login' %}" class="login-link">
+                    Login
+                </a>
+
+                <a href="{% url 'register' %}" class="register-btn">
+                    Register
+                </a>
+
+                {% endif %}
+
+                <form method="GET"
+                    action="{% url 'product_list' %}"
+                    class="search-form">
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input type="search"
+                            name="search"
+                            placeholder="Search products"
+                            value="{{ search_query|default:'' }}">
+
+                        <button type="submit">
+                            Search
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <button type="button"
+                        class="dark-mode-btn"
+                        onclick="toggleDarkMode()">
+
+                    <i class="fa-solid fa-moon"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </nav>
 
 <div class="container">
     {% block content %}
@@ -90,51 +146,135 @@
 
     <div class="footer-grid">
 
+        <!-- BRAND -->
+
         <div>
+
             <h3>Amina Store</h3>
+
             <p>
                 Modern Django Ecommerce powered by Python.
             </p>
 
             <div class="social-icons">
-                <span>📘</span>
-                <span>🐦</span>
-                <span>📸</span>
-                <span>💻</span>
+
+                <a href="#">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a href="#">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+
             </div>
+
         </div>
 
+        <!-- SHOP -->
+
         <div>
+
             <h4>Shop</h4>
-            <a href="{% url 'product_list' %}">All Products</a>
-            <a href="{% url 'categories' %}">Categories</a>
-            <a href="#">Special Offers</a>
-            <a href="#">New Arrivals</a>
+
+            <a href="{% url 'product_list' %}">
+                <i class="fa-solid fa-shop"></i>
+                All Products
+            </a>
+
+            <a href="{% url 'categories' %}">
+                <i class="fa-solid fa-layer-group"></i>
+                Categories
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-tags"></i>
+                Special Offers
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-star"></i>
+                New Arrivals
+            </a>
+
         </div>
 
+        <!-- CUSTOMER SERVICE -->
+
         <div>
+
             <h4>Customer Service</h4>
-            <a href="{% url 'about' %}">About Us</a>
-            <a href="{% url 'contact' %}">Contact Us</a>
-            <a href="#">Shipping Policy</a>
-            <a href="#">Returns & Refunds</a>
+
+            <a href="{% url 'about' %}">
+                <i class="fa-solid fa-circle-info"></i>
+                About Us
+            </a>
+
+            <a href="{% url 'contact' %}">
+                <i class="fa-solid fa-envelope"></i>
+                Contact Us
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-truck"></i>
+                Shipping Policy
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-rotate-left"></i>
+                Returns & Refunds
+            </a>
+
         </div>
+
+        <!-- ACCOUNT -->
 
         <div class="footer-account">
-            <h4>My Account</h4>
-            <a href="{% url 'profile' %}">My Profile</a>
-            <a href="{% url 'order_history' %}">My Orders</a>
-            <a href="#">Wishlist</a>
-            <form action="{% url 'logout' %}" method="POST">
-                    {% csrf_token %}
 
-                    <button type="submit" class="footer-logout">
-                        📋 Logout
-                    </button>
+            <h4>My Account</h4>
+
+            <a href="{% url 'profile' %}">
+                <i class="fa-solid fa-user"></i>
+                My Profile
+            </a>
+
+            <a href="{% url 'order_history' %}">
+                <i class="fa-solid fa-bag-shopping"></i>
+                My Orders
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-heart"></i>
+                Wishlist
+            </a>
+
+            <form action="{% url 'logout' %}" method="POST">
+
+                {% csrf_token %}
+
+                <button type="submit" class="footer-logout">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </button>
+
             </form>
+
         </div>
 
+        <!-- NEWSLETTER -->
+
         <div>
+
             <h4>Newsletter</h4>
 
             <p>
@@ -142,22 +282,70 @@
             </p>
 
             <form class="newsletter-form">
+
                 <input type="email" placeholder="Your email">
-                <button type="submit">Subscribe</button>
+
+                <button type="submit">
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Subscribe
+
+                </button>
+
             </form>
+
         </div>
 
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 Amina Store. All rights reserved.</p>
+
+        <p>
+            © 2026 Amina Store. All rights reserved.
+        </p>
 
         <div>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <a href="#">
+                Terms & Conditions
+            </a>
+
         </div>
+
     </div>
 
 </footer>
+<script>
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle('dark-mode');
+
+    if(document.body.classList.contains('dark-mode')){
+
+        localStorage.setItem('theme', 'dark');
+
+    }else{
+
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+window.onload = function(){
+
+    const savedTheme = localStorage.getItem('theme');
+
+    if(savedTheme === 'dark'){
+
+        document.body.classList.add('dark-mode');
+    }
+}
+
+</script>
 </body>
 </html>

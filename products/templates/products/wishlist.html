@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <h1 class="profile-title">Wishlist</h1>
+    <p class="breadcrumb-text">Home › My Profile › Wishlist</p>
+
+    <div class="profile-layout">
+
+        {% include 'products/profile_sidebar.html' %}
+
+        <section class="profile-main-card">
+
+            <h2>
+                <i class="fa-regular fa-heart"></i>
+                My Wishlist
+            </h2>
+
+            <p class="section-subtitle">
+                Products you saved for later.
+            </p>
+
+            {% if wishlist_items %}
+
+                <div class="wishlist-grid">
+
+                    {% for item in wishlist_items %}
+
+                    <div class="wishlist-card">
+
+                        <img src="{{ item.product.image.url }}"
+                            alt="{{ item.product.name }}">
+
+                        <h3>{{ item.product.name }}</h3>
+
+                        <p class="wishlist-price">
+                            R {{ item.product.price }}
+                        </p>
+
+                        <div class="wishlist-actions">
+
+                            <a href="{% url 'product_detail' item.product.id %}"
+                            class="btn btn-dark">
+                                <i class="fa-solid fa-eye"></i>
+                                View
+                            </a>
+
+                            <a href="{% url 'add_to_cart' item.product.id %}"
+                            class="btn btn-primary">
+
+                                <i class="fa-solid fa-cart-shopping"></i>
+
+                                Add to Cart
+
+                            </a>
+
+                            <a href="{% url 'remove_from_wishlist' item.id %}"
+                            class="btn btn-outline-danger">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                                Remove
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-review">
+
+                    <p>No wishlist items yet.</p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}

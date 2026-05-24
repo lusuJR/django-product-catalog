@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+
+        <h1>Review Product</h1>
+
+        <p>{{ product.name }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Rating</label>
+            {{ form.rating }}
+
+            <label>Comment</label>
+            {{ form.comment }}
+
+            <button type="submit" class="auth-btn">
+                Submit Review
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

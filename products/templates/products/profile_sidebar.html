@@ -1,0 +1,49 @@
+<aside class="profile-sidebar">
+
+    <div class="avatar-circle">
+        <i class="fa-solid fa-user"></i>
+    </div>
+
+    <h3>{{ request.user.username }}</h3>
+    <p>Customer</p>
+
+    <a class="sidebar-link" href="{% url 'profile' %}">
+        <i class="fa-solid fa-user"></i>
+        Profile Overview
+    </a>
+
+    <a class="sidebar-link" href="{% url 'order_history' %}">
+        <i class="fa-solid fa-cart-shopping"></i>
+        My Orders
+    </a>
+
+    <a class="sidebar-link" href="{% url 'wishlist' %}">
+        <i class="fa-regular fa-heart"></i>
+        Wishlist
+    </a>
+
+    <a class="sidebar-link" href="{% url 'addresses' %}">
+        <i class="fa-solid fa-location-dot"></i>
+        Addresses
+    </a>
+
+    <a class="sidebar-link" href="{% url 'change_password' %}">
+        <i class="fa-solid fa-lock"></i>
+        Change Password
+    </a>
+
+    <a class="sidebar-link" href="{% url 'account_settings' %}">
+        <i class="fa-solid fa-gear"></i>
+        Account Settings
+    </a>
+
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+
+        <button type="submit" class="sidebar-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </button>
+    </form>
+
+</aside>

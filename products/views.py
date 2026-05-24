@@ -3,8 +3,15 @@ from django.contrib.auth import login
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
-from .models import Product, Order, OrderItem
+from .models import Product, Order, OrderItem,Review, Wishlist
+from .forms import ProductForm, ReviewForm
 from .forms import ProductForm
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.core.mail import send_mail
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 def product_list(request):
     products = Product.objects.all()
@@ -405,9 +412,156 @@ def place_order(request):
                 quantity=item['quantity'],
                 price=item['price']
             )
+        
+        send_mail(
+            subject='Order Confirmation - Amina Store',
+
+            message=f'''
+                Hello {request.user.username},
+
+                Thank you for shopping with Amina Store.
+
+                Your order #{order.id} has been placed successfully.
+
+                Total Amount: R {order.total}
+
+                We appreciate your support.
+
+                Amina Store Team
+                ''',
+
+                from_email=None,
+
+                recipient_list=[request.user.email],
+
+                fail_silently=True
+            )
 
         request.session['cart'] = {}
 
-        return redirect('order_history')
+        return redirect('payment_success', order_id=order.id)
 
     return redirect('payment_page')
+
+@login_required(login_url='login')
+def payment_success(request, order_id):
+
+    order = get_object_or_404(Order, id=order_id)
+
+    order_items = OrderItem.objects.filter(order=order)
+
+    return render(request, 'products/payment_success.html', {
+        'order': order,
+        'order_items': order_items
+    })
+
+@login_required(login_url='login')
+def download_invoice(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    template = get_template('products/invoice_template.html')
+    html = template.render({'order': order})
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="invoice_{order.id}.pdf"'
+
+    pisa.CreatePDF(html, dest=response)
+
+    return response
+
+
+@login_required(login_url='login')
+def add_review(request, product_id):
+
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == 'POST':
+
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+
+            review = form.save(commit=False)
+
+            review.product = product
+            review.user = request.user
+
+            review.save()
+
+            return redirect('product_detail', pk=product.id)
+
+    else:
+        form = ReviewForm()
+
+    return render(request, 'products/add_review.html', {
+        'product': product,
+        'form': form
+    })
+@login_required(login_url='login')
+def wishlist(request):
+
+    wishlist_items = Wishlist.objects.filter(
+        user=request.user
+    ).select_related('product')
+
+    return render(request, 'products/wishlist.html', {
+        'wishlist_items': wishlist_items
+    })
+
+@login_required(login_url='login')
+def add_to_wishlist(request, product_id):
+
+    product = get_object_or_404(Product, id=product_id)
+
+    Wishlist.objects.get_or_create(
+        user=request.user,
+        product=product
+    )
+
+    return redirect('wishlist')
+
+
+@login_required(login_url='login')
+def remove_from_wishlist(request, wishlist_id):
+
+    wishlist_item = get_object_or_404(
+        Wishlist,
+        id=wishlist_id,
+        user=request.user
+    )
+
+    wishlist_item.delete()
+
+    return redirect('wishlist')
+
+@login_required(login_url='login')
+def addresses(request):
+
+    return render(request, 'products/addresses.html')
+
+@login_required(login_url='login')
+def change_password(request):
+
+    if request.method == 'POST':
+
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+
+            user = form.save()
+
+            update_session_auth_hash(request, user)
+
+            return redirect('profile')
+
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'products/change_password.html', {
+        'form': form
+    })
+
+@login_required(login_url='login')
+def account_settings(request):
+
+    return render(request, 'products/account_settings.html')

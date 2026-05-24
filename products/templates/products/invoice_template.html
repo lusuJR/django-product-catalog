@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            color:#111827;
+            font-size:14px;
+        }
+
+        .header{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .header h1{
+            color:#0f172a;
+            font-size:28px;
+            margin-bottom:5px;
+        }
+
+        .invoice-box{
+            border:1px solid #e5e7eb;
+            padding:20px;
+            margin-bottom:25px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        th{
+            background:#f3f4f6;
+            padding:10px;
+            text-align:left;
+        }
+
+        td{
+            padding:10px;
+            border-bottom:1px solid #e5e7eb;
+        }
+
+        .total{
+            text-align:right;
+            font-size:18px;
+            font-weight:bold;
+            margin-top:25px;
+        }
+
+        .footer{
+            margin-top:40px;
+            text-align:center;
+            color:#6b7280;
+            font-size:12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Amina Store</h1>
+        <p>Official Invoice / Receipt</p>
+    </div>
+
+    <div class="invoice-box">
+        <p><strong>Invoice Number:</strong> INV-{{ order.id }}</p>
+        <p><strong>Customer:</strong> {{ order.user.username }}</p>
+        <p><strong>Email:</strong> {{ order.user.email }}</p>
+        <p><strong>Date:</strong> {{ order.created_at|date:"d M Y" }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>R {{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total">
+        Total Paid: R {{ order.total }}
+    </div>
+
+    <div class="footer">
+        <p>Thank you for shopping with Amina Store.</p>
+        <p>This is a system-generated receipt.</p>
+    </div>
+
+</body>
+</html>

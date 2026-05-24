@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <h1 class="profile-title">Account Settings</h1>
+
+    <p class="breadcrumb-text">
+        Home › My Profile › Account Settings
+    </p>
+
+    <div class="profile-layout">
+
+        {% include 'products/profile_sidebar.html' %}
+
+        <section class="profile-main-card">
+
+            <h2>
+                <i class="fa-solid fa-gear"></i>
+                Account Settings
+            </h2>
+
+            <p class="section-subtitle">
+                Manage your account preferences and security.
+            </p>
+
+            <div class="settings-grid">
+
+                <!-- EMAIL NOTIFICATIONS -->
+
+                <div class="settings-card">
+
+                    <div class="settings-header">
+
+                        <div>
+                            <h4>Email Notifications</h4>
+
+                            <p>
+                                Receive updates about orders and promotions.
+                            </p>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- DARK MODE -->
+
+                <div class="settings-card">
+
+                    <div class="settings-header">
+
+                        <div>
+                            <h4>Dark Mode</h4>
+
+                            <p>
+                                Enable dark theme for the platform.
+                            </p>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- TWO FACTOR -->
+
+                <div class="settings-card">
+
+                    <div class="settings-header">
+
+                        <div>
+                            <h4>Two-Factor Authentication</h4>
+
+                            <p>
+                                Improve account security with 2FA.
+                            </p>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- ACCOUNT VISIBILITY -->
+
+                <div class="settings-card">
+
+                    <div class="settings-header">
+
+                        <div>
+                            <h4>Profile Visibility</h4>
+
+                            <p>
+                                Control who can view your public profile.
+                            </p>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}
