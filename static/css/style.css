@@ -1614,3 +1614,20 @@ h1 {
         grid-template-columns:1fr;
     }
 }
+
+
+.analytics-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+.analytics-grid canvas{
+    max-height:320px;
+}
+
+@media(max-width:992px){
+    .analytics-grid{
+        grid-template-columns:1fr;
+    }
+}

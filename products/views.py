@@ -272,10 +272,17 @@ def admin_analytics(request):
     total_orders = Order.objects.count()
     total_revenue = sum(order.total for order in Order.objects.all())
 
+    pending_orders = Order.objects.filter(status='Pending').count()
+    processing_orders = Order.objects.filter(status='Processing').count()
+    delivered_orders = Order.objects.filter(status='Delivered').count()
+
     return render(request, 'products/admin_analytics.html', {
         'total_products': total_products,
         'total_orders': total_orders,
         'total_revenue': total_revenue,
+        'pending_orders': pending_orders,
+        'processing_orders': processing_orders,
+        'delivered_orders': delivered_orders,
     })
 
 
